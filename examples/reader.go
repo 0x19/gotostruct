@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
-	gts := gs.GotoStruct{}
+	gts := gs.GotoStruct{
+		Name: "ExampleStruct",
+	}
 
 	reader := strings.NewReader(`{"simple" : "json", "test": null, "something": [{"baz": 1}, {"baz": 2}]}`)
 
