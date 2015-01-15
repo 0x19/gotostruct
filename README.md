@@ -13,7 +13,7 @@ Open source [Go](http://golang.org) package designed to help you converting JSON
 
 List of examples can be found within [GotoStruct Examples](https://github.com/0x19/gotostruct/tree/master/examples).
 
-Bellow you can see the most common one.
+Following code snippet:
 
 ```go
 package main
@@ -40,6 +40,19 @@ func main() {
 	fmt.Println(string(response))
 }
 ```
+
+will produce following struct:
+
+```go
+type Example struct {
+	Simple    string `json:"simple"`
+	Something []struct {
+		Baz float64 `json:"baz"`
+	} `json:"something"`
+	Test interface{} `json:"test"`
+}
+```
+
 
 ### Related Work
 
