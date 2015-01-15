@@ -1,6 +1,7 @@
 package gotostruct
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -83,4 +84,22 @@ func TestSimpleJson(t *testing.T) {
 	if !strings.HasPrefix(string(response), "type TestStruct struct {") {
 		t.Fatal("Struct is not starting as it should: ", string(response))
 	}
+}
+
+func TestComplexJson(t *testing.T) {
+	gos := GotoStruct{Name: "TestStruct"}
+
+	reader := strings.NewReader(COMPLEX_JSON)
+
+	response, err := gos.Generate(reader)
+
+	if err != nil {
+		t.Fatal("Got Error while generating struct: ", err)
+	}
+
+	if !strings.HasPrefix(string(response), "type TestStruct struct {") {
+		t.Fatal("Struct is not starting as it should: ", string(response))
+	}
+
+	fmt.Println(string(response))
 }
