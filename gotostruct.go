@@ -20,7 +20,7 @@ type GotoStruct struct {
 // Just quick helper for naming.
 // @TODO - Add some validation here and return error in case of issues
 func (g *GotoStruct) SetName(n string) {
-	g.Name = strings.Replace(g.fmtFieldName(n), "_", "", -1)
+	g.Name = strings.Replace(g.fieldName(n), "_", "", -1)
 }
 
 // Func used for actual Struct generation. It must be type of io.Reader
@@ -64,7 +64,7 @@ func (g *GotoStruct) Generate(input io.Reader) ([]byte, error) {
 }
 
 // Will format string into valid field name that we will later on use for name/members of the struct
-func (g *GotoStruct) fmtFieldName(s string) string {
+func (g *GotoStruct) fieldName(s string) string {
 	parts := strings.Split(s, "_")
 
 	for i := range parts {
@@ -97,7 +97,7 @@ func (g *GotoStruct) fmtFieldName(s string) string {
 }
 
 // Getting type for the value itself
-func (g *GotoStruct) typeForValue(value interface{}) string {
+func (g *GotoStruct) valueType(value interface{}) string {
 	if objects, ok := value.([]interface{}); ok {
 		types := make(map[reflect.Type]bool, 0)
 
@@ -106,7 +106,7 @@ func (g *GotoStruct) typeForValue(value interface{}) string {
 		}
 
 		if len(types) == 1 {
-			return "[]" + g.typeForValue(objects[0])
+			return "[]" + g.valueType(objects[0])
 		}
 
 		return "[]interface{}"
@@ -133,7 +133,7 @@ func (g *GotoStruct) build(obj map[string]interface{}, depth int) string {
 
 	for _, key := range keys {
 		value := obj[key]
-		valueType := g.typeForValue(value)
+		valueType := g.valueType(value)
 
 		//If a nested value, recurse
 		switch value := value.(type) {
@@ -143,7 +143,7 @@ func (g *GotoStruct) build(obj map[string]interface{}, depth int) string {
 			valueType = g.build(value, depth+1) + "}"
 		}
 
-		fieldName := g.fmtFieldName(key)
+		fieldName := g.fieldName(key)
 		structure += fmt.Sprintf("\n%s %s `json:\"%s\"`", fieldName, valueType, key)
 	}
 
