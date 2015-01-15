@@ -1,14 +1,3 @@
-# gotostruct
-Convert any JSON object into Go Struct  
-
-
-#### Examples
-
-List of examples can be found within [GotoStruct Examples](https://github.com/0x19/gotostruct/tree/master/examples).
-
-Bellow you can see the most common one.
-
-```go
 package main
 
 import (
@@ -30,4 +19,3 @@ func main() {
 
 	fmt.Println(string(response))
 }
-```
