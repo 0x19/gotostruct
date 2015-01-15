@@ -26,7 +26,7 @@ import (
 
 func main() {
 	gts := gs.GotoStruct{
-		Name: "ExampleStruct",
+		Name: "Example - Struct",
 	}
 
 	reader := strings.NewReader(`{"simple" : "json", "test": null, "something": [{"baz": 1}, {"baz": 2}]}`)
@@ -44,7 +44,7 @@ func main() {
 will produce following struct:
 
 ```go
-type Example struct {
+type ExampleStruct struct {
 	Simple    string `json:"simple"`
 	Something []struct {
 		Baz float64 `json:"baz"`
