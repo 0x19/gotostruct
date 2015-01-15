@@ -1,4 +1,4 @@
-[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)]()
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/0x19/gotostruct/tree/master/LICENSE)
 [![Build Status](https://travis-ci.org/0x19/gotostruct.svg)](https://travis-ci.org/0x19/gotostruct)
 [![Go 1.3 Ready](https://img.shields.io/badge/Go%201.3-Ready-green.svg?style=flat)]()
 [![Go 1.4 Ready](https://img.shields.io/badge/Go%201.4-Ready-green.svg?style=flat)]()
@@ -6,7 +6,7 @@
 GotoStruct
 ====
 
-Open source [Go Lang](http://golang.org) package designed to help you converting JSON objects into Go Structs.  
+Open source [Go](http://golang.org) package designed to help you converting JSON objects into Go Structs.
 
 
 ### Examples

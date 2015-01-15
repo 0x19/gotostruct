@@ -1,7 +1,6 @@
 package gotostruct
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 )
@@ -63,10 +62,16 @@ func TestStructName(t *testing.T) {
 		t.Fatal("Name should be empty and its not")
 	}
 
-	gos.SetName("TestNewStructName")
+	gos.SetName("Test - NewStruct  Name")
 
 	if gos.Name != "TestNewStructName" {
 		t.Fatal("Name should equal TestNewStructName and it's not. - ", gos.Name)
+	}
+
+	gos.SetName("Test-New-Struct")
+
+	if gos.Name != "TestNewStruct" {
+		t.Fatal("Name should equal TestNewStruct and it's not. - ", gos.Name)
 	}
 }
 
@@ -87,7 +92,7 @@ func TestSimpleJson(t *testing.T) {
 }
 
 func TestComplexJson(t *testing.T) {
-	gos := GotoStruct{Name: "TestStruct"}
+	gos := GotoStruct{Name: "Test Struct"}
 
 	reader := strings.NewReader(COMPLEX_JSON)
 
@@ -100,6 +105,4 @@ func TestComplexJson(t *testing.T) {
 	if !strings.HasPrefix(string(response), "type TestStruct struct {") {
 		t.Fatal("Struct is not starting as it should: ", string(response))
 	}
-
-	fmt.Println(string(response))
 }

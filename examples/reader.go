@@ -7,16 +7,14 @@ import (
 )
 
 func main() {
-	gts := gs.GotoStruct{
-		Name: "ExampleStruct",
-	}
+	gts := gs.GotoStruct{Name: "Example"}
 
 	reader := strings.NewReader(`{"simple" : "json", "test": null, "something": [{"baz": 1}, {"baz": 2}]}`)
 
 	response, err := gts.Generate(reader)
 
 	if err != nil {
-		fmt.Errorf("Got Error while generating struct: ", err)
+		fmt.Printf("Got Error while generating struct: %v", err)
 	}
 
 	fmt.Println(string(response))

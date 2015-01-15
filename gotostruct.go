@@ -17,14 +17,20 @@ type GotoStruct struct {
 	Name string
 }
 
+// Just quick helper for naming.
+// @TODO - Add some validation here and return error in case of issues
 func (g *GotoStruct) SetName(n string) {
-	g.Name = n
+	g.Name = strings.Replace(g.fmtFieldName(n), "_", "", -1)
 }
 
+// Func used for actual Struct generation. It must be type of io.Reader
+// Name must be set by SetName() or on struct init.
 func (g *GotoStruct) Generate(input io.Reader) ([]byte, error) {
 
-	if g.Name == "" {
-		g.SetName("ExampleStruct")
+	g.SetName(g.Name)
+
+	if len(g.Name) < 2 {
+		return nil, fmt.Errorf("Make sure to set name of the struct before Generate()")
 	}
 
 	var jsonobj interface{}
@@ -53,9 +59,11 @@ func (g *GotoStruct) Generate(input io.Reader) ([]byte, error) {
 	if err != nil {
 		err = fmt.Errorf("error formatting: %s, was formatting\n%s", err, src)
 	}
+
 	return formatted, err
 }
 
+// Will format string into valid field name that we will later on use for name/members of the struct
 func (g *GotoStruct) fmtFieldName(s string) string {
 	parts := strings.Split(s, "_")
 
@@ -75,9 +83,11 @@ func (g *GotoStruct) fmtFieldName(s string) string {
 
 	for i, c := range runes {
 		ok := unicode.IsLetter(c) || unicode.IsDigit(c)
+
 		if i == 0 {
 			ok = unicode.IsLetter(c)
 		}
+
 		if !ok {
 			runes[i] = '_'
 		}
@@ -86,6 +96,7 @@ func (g *GotoStruct) fmtFieldName(s string) string {
 	return string(runes)
 }
 
+// Getting type for the value itself
 func (g *GotoStruct) typeForValue(value interface{}) string {
 	if objects, ok := value.([]interface{}); ok {
 		types := make(map[reflect.Type]bool, 0)
@@ -108,6 +119,7 @@ func (g *GotoStruct) typeForValue(value interface{}) string {
 	return reflect.TypeOf(value).Name()
 }
 
+// Func that will be called by Generate that will recursively build struct and return back as string
 func (g *GotoStruct) build(obj map[string]interface{}, depth int) string {
 	structure := "struct {"
 
